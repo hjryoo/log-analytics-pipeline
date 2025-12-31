@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: log-analytics-pipeline
+  threads:
+    virtual:
+      enabled: true
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer # 객체를 바로 JSON으로
+      properties:
+        spring.json.add.type.headers: false
+    consumer:
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
+app:
+  generator:
+    enabled: true # 생성기 켜고 끄는 스위치
+    rate-ms: 1000 # 1초마다 로그 생성 (나중에 줄여서 부하 테스트 가능)
